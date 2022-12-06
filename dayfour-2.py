@@ -16,11 +16,6 @@ for line in lines:
     intera[1][0]=int(separata[1][0])
     intera[1][1]=int(separata[1][1])
     print(separata)
-    
-    # if ((intera[0][0] <= intera[1][0] and intera[0][1] >= intera[1][0]) or (intera[0][0] >= intera[1][0] and intera[0][1] >= intera[1][0])):
-        # i=i+1
-    # else:
-        # print("<- not here")
         
     n=intera[0][0]
     b=0
