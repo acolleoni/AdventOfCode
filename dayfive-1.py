@@ -2,48 +2,21 @@ f = open("file5.txt", "r")
 lines = f.readlines()
 f.close()
 
-i=0
+#separo le due parti del file
 b=0
-schemino = [""]
-mosse =[""]
-
+schemino = []
+mosse =[]
 for line in lines:
     if not line.strip():
         b=1
-        i=0
-    elif not b :
-        schemino[i]=line.replace('\n', '')
-        i=i+1
-        schemino.append("")
+    elif not b:
+        schemino.append(line.replace('\n', ''))
     else:
-        mosse[i]=line.replace('\n', '')
-        i=i+1
-        mosse.append("")
+        mosse.append(line.replace('\n', ''))
 
-schemino.remove('')
-mosse.remove('')
-
-
-#parsing delle mosse - lo faccio prima perche sembra meno impossibile
-#movimento di X cubbett da Y a Z
-lavoro=[""]
-lavorodue=[""]
-i=0
-for mossa in mosse:
-    lavoro[i]=mossa.replace('move ', '')
-    lavoro[i]=lavoro[i].split(" from ")
-    lavoro[i][1]=lavoro[i][1].split(" to ")
-    i=i+1
-    lavoro.append("")
-lavoro.remove('')
-
-movimento=[]
-for lavori in lavoro:
-    movimento.append([int(lavori[0]), int(lavori[1][0]), int(lavori[1][1])])
-
-#parsing dello schemino - aiuto
+#parsing dello schemino
 #1-trovo quante sono le colonne
-rigafinale=schemino[(len(schemino)-1)]
+rigafinale=schemino[len(schemino)-1]
 colonne=0
 for caratteri in rigafinale:
     if caratteri != " ":
@@ -55,7 +28,7 @@ righe=len(schemino)-1
 
 #3-leggo le righe una alla volta
 schemino.pop((len(schemino)-1))
-j=0 
+j=0
 k=1
 i=0
 mappa=[]
@@ -68,7 +41,6 @@ for riga in schemino:
     k=1
     j=0
     i=i+1
-
 
 #inverto la matrice
 nuovamappa=[]
@@ -90,27 +62,37 @@ def remove_values_from_list(the_list, val):
 mappasenzaspazi=[]
 for elemento in nuovamappa:
     mappasenzaspazi.append(remove_values_from_list(elemento, " "))
-           
 
+#parsing delle mosse
+#movimento di X cubetti da Y a Z
+lavoro=[]
+lavorodue=[]
+for mossa in mosse:
+    cosa=mossa.replace('move ', '')
+    cosa=cosa.split(" from ")
+    cosa[1]=cosa[1].split(" to ")
+    lavoro.append(cosa)
+movimento=[]
+
+for lavori in lavoro:
+    movimento.append([int(lavori[0]), int(lavori[1][0]), int(lavori[1][1])])
 
 #sposto secondo le indicazioni
 for movimenti in movimento:
-    quanticubbett=movimenti[0]
+    quanticubetti=movimenti[0]
     da=movimenti[1]-1
     a=movimenti[2]-1
     fine=len(mappasenzaspazi[da])
     
     i=1
     j=fine-1
-    while(i<=quanticubbett):
+    while(i<=quanticubetti):
         mappasenzaspazi[a].append(mappasenzaspazi[da][j])
-        i=i+1
-        j=j-1
-    i=1
-    while(i<=quanticubbett):
         mappasenzaspazi[da].pop(len(mappasenzaspazi[da])-1)
         i=i+1
+        j=j-1
 
 #stampo cosa sta in cima a ogni fila
 for fila in mappasenzaspazi:
-    print (fila[len(fila)-1])
+    print (fila[len(fila)-1], end='')
+print("\n")
