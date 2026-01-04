@@ -161,3 +161,6 @@ cython_debug/
 
 #AOC Inputs
 *.txt
+
+#AOC Tests
+*test*
