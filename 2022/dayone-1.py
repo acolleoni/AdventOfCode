@@ -1,5 +1,3 @@
-import array
-
 f = open("file.txt", "r")
 lines = f.readlines()
 
